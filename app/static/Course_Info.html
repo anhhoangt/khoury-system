@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+	<!-- Bootstrap Styles-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+     <!-- FontAwesome Styles-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- Custom Styles-->
+    <link href="assets/css/custom-styles.css" rel="stylesheet" />
+     <!-- Google Fonts-->
+   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" ><i class="fa fa-gear"></i> <strong>Khoury Students Grades Management System</strong></a>
+            </div>
+
+            <ul class="nav navbar-top-links navbar-right">
+   
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a onclick= logout()><i class="fa fa-sign-out fa-fw"></i> Log Out</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+        </nav>
+        <!--/. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+
+                    <li>
+                        <a class="active-menu"><i class="fa fa-desktop"></i> Personal information</a>
+                    </li>
+                    
+                    <li>
+                        <a  style="cursor:pointer" id = "b"><i class="fa fa-table" ></i> Grades</a>
+                    </li>
+
+                    <li>
+                        <a  style="cursor:pointer" id = "c"><i class="fa fa-edit" ></i> Change Password</a>
+                    </li>
+                    <li>
+                        <a style="cursor:pointer" id="d"><i class="fa fa-table"></i> Online course Selection </a>
+                    </li>
+                    <li>
+                        <a style="cursor:pointer" id="e"><i class="fa fa-table"></i> My Courses</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+            <div id="page-inner">
+			 <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            	Personal Information
+                        </h1>
+                    </div>
+                </div> 
+                 <!-- /. ROW  -->
+				 
+				
+			<div class="row">
+
+			  <div class="col-md-12">
+                        <div class="panel-body">
+                            <div class="table-responsive" id="tablecontainer">
+                        
+                            </div>
+                        
+                        </div>
+			</div>						
+				</div>								
+									
+                 <!-- /. ROW  -->
+			
+               
+                <!-- /. ROW  -->
+
+                 <!-- /. ROW  -->
+                
+
+                <!-- /. ROW  -->
+			
+				</div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="assets/js/jquery-1.10.2.js"></script>
+      <!-- Bootstrap Js -->
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+      <!-- Custom Js -->
+    <script src="assets/js/custom-scripts.js"></script>
+    
+    <script type="text/javascript">
+
+        document.getElementById("b").onclick = function () {
+            window.location.href = "Student_Scores.html";
+        }
+        document.getElementById("c").onclick = function () {
+            window.location.href = "Student_ChangePassword.html";
+        }
+        document.getElementById("d").onclick = function () {
+            window.location.href = "/student/Course_Info";
+        }
+
+        function logout()
+        {
+            if (confirm("Do you want to exit？")) {
+                window.location.href = "Login.html";
+            }             
+        }
+
+        process_course_info();
+
+        function process_course_info() {
+                var ajaxObj = new XMLHttpRequest();
+                ajaxObj.open('get', '/admin/course/select');
+                ajaxObj.send();
+                ajaxObj.onreadystatechange = function () {
+                    if (ajaxObj.readyState == 4 && ajaxObj.status == 200) {
+                        console.log('Data returned successfully');
+                        console.log(ajaxObj.responseText);
+                        var last = ajaxObj.responseText; //将JSON对象转化为JSON字符
+                        var obj = JSON.parse(last);
+                        var courses = obj.courses;
+
+                        var tablecontainer = document.getElementById("tablecontainer");
+                        while (tablecontainer.hasChildNodes()) {
+                            tablecontainer.removeChild(tablecontainer.firstChild);
+                        }
+
+                        var table = document.createElement("table");
+                        table.style.width = "790px";
+                        table.style.borderCollapse = "collapse";
+                        table.border = 1;
+                        table.className = "table table-striped table-bordered table-hover";
+
+                        var thead = document.createElement("thead");
+
+                        var row = document.createElement('tr');
+                        var course_id = document.createElement('td');
+                        var course_name = document.createElement('td');
+                        var year = document.createElement('td');
+                        var semester = document.createElement('td');
+                        var teacher_id = document.createElement('td');
+                        var credit = document.createElement('td');
+                        var number_of_students = document.createElement('td');
+                        var average_grade = document.createElement('td');
+                        var detail = document.createElement("td");
+
+                        course_id.innerHTML = "Course ID";
+                        course_name.innerHTML = "Course Name";
+                        year.innerHTML = "Academic Year";
+                        semester.innerHTML = "Semester";
+                        teacher_id.innerHTML = "Teacher No/Name";
+                        credit.innerHTML = "Credit";
+                        number_of_students.innerHTML = "Number of students";
+                        average_grade.innerHTML = "Average Grade";
+                        detail.innerHTML = "View Details";
+
+                        row.appendChild(course_id);
+                        row.appendChild(course_name);
+                        row.appendChild(year);
+                        row.appendChild(semester);
+                        row.appendChild(teacher_id);
+                        row.appendChild(credit);
+                        row.appendChild(number_of_students);
+                        row.appendChild(average_grade);
+                        row.appendChild(detail);
+
+                        thead.appendChild(row);
+                        table.appendChild(thead);
+
+                        var tbody = document.createElement('tbody');
+
+                        for (var i = 0; i < courses.length; i++) {
+                            var row = document.createElement('tr');
+                            var course_id = document.createElement('td');
+                            var course_name = document.createElement('td');
+                            var year = document.createElement('td');
+                            var semester = document.createElement('td');
+                            var teacher_id = document.createElement('td');
+                            var credit = document.createElement('td');
+                            var number_of_students = document.createElement('td');
+                            var average_grade = document.createElement('td');
+                            var detail = document.createElement("td");
+
+                            course_id.innerHTML = courses[i].course_id;
+                            course_name.innerHTML = courses[i].course_name;
+                            year.innerHTML = courses[i].year;
+                            semester.innerHTML = courses[i].semester;
+                            teacher_id.innerHTML = courses[i].teacher_id + "/" + courses[i].teacher_name;
+                            credit.innerHTML = courses[i].credit;
+                            number_of_students.innerHTML = courses[i].number_of_students;
+                            average_grade.innerHTML = courses[i].average_grade;
+                            detail.innerHTML = "View Details";
+                            detail.style = "cursor:pointer";
+
+                            detail.setAttribute('row', i.toString);
+                            detail.setAttribute("course_id", courses[i].course_id);
+
+                            detail.onclick = function () {
+                                localStorage.setItem("course_id", this.getAttribute("course_id"));
+                                localStorage.setItem("current_type", "change_course");
+                                window.location.href = "Admin_Detail.html";
+                            }
+
+                            row.appendChild(course_id);
+                            row.appendChild(course_name);
+                            row.appendChild(year);
+                            row.appendChild(semester);
+                            row.appendChild(teacher_id);
+                            row.appendChild(credit);
+                            row.appendChild(number_of_students);
+                            row.appendChild(average_grade);
+                            row.appendChild(detail);
+                            tbody.appendChild(row);
+                        }
+                        table.appendChild(tbody);
+                        tablecontainer.appendChild(table);
+                    }
+                    else if (ajaxObj.readyState == 4 && ajaxObj.status == 404) {
+                        var last = ajaxObj.responseText; //将JSON对象转化为JSON字符
+                        var obj = JSON.parse(last);
+                        alert(obj.error);
+                    }
+                }
+            }
+
+	</script>
+ 
+</body>
+</html>

@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+	<!-- Bootstrap Styles-->
+    <link href="/static/assets/css/bootstrap.css" rel="stylesheet" />
+     <!-- FontAwesome Styles-->
+    <link href="/static/assets/css/font-awesome.css" rel="stylesheet" />
+        <!-- Custom Styles-->
+    <link href="/static/assets/css/custom-styles.css" rel="stylesheet" />
+     <!-- Google Fonts-->
+   <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+</head>
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" ><i class="fa fa-gear"></i> <strong>Khoury System</strong></a>
+            </div>
+
+            <ul class="nav navbar-top-links navbar-right">
+   
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a onclick= logout()><i class="fa fa-sign-out fa-fw"></i> Log Out</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+        </nav>
+        <!--/. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+
+                    <li>
+                        <a class="active-menu"><i class="fa fa-desktop"></i> Personal information</a>
+                    </li>
+                    
+                    <li>
+                        <a  style="cursor:pointer" id = "b"><i class="fa fa-table" ></i> Grades</a>
+                    </li>
+
+                    <li>
+                        <a  style="cursor:pointer" id = "c"><i class="fa fa-edit" ></i> Change Password</a>
+                    </li>
+                    <li>
+                        <a style="cursor:pointer" id="d"><i class="fa fa-table"></i> Online course selection </a>
+                    </li>
+                    <li>
+                        <a style="cursor:pointer" id="e"><i class="fa fa-table"></i> My course selection</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper" >
+            <div id="page-inner">
+			 <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            	Course List
+                        </h1>
+                    </div>
+                </div> 
+                 <!-- /. ROW  -->
+				 
+				
+			<div class="row">
+
+			  <div class="col-md-12">
+                        <div class="panel-body">
+                            <div class="table-responsive" id="tablecontainer">
+                                
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Course No</th>
+                                            <th>Name</th>
+                                            <th>Year</th>
+                                            <th>Semester</th>
+                                            <th>Teacher No/Name</th>
+                                            <th>Credit</th>
+                                            <th>Operation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in results %}
+                                        <tr>
+                                            <td>{{item[0]}}</td>
+                                            <td>{{item[1]}}</td>
+                                            <td>{{item[2]}}</td>
+                                            <td>{{item[3]}}</td>
+                                            <td>{{item[4]}}</td>
+                                            <td>{{item[5]}}</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-primary" href="/student/addcourse/{{item[0]}}" role="button">Course Selection</span></a>
+                                                <!-- <a class="btn btn-sm btn-danger" href="/student/delcourse/{{item[0]}}" role="button">删除<span
+                                                        class="glyphicon glyphicon-trash"></span></a> -->
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                        </div>
+			</div>						
+				</div>								
+									
+                 <!-- /. ROW  -->
+			
+               
+                <!-- /. ROW  -->
+
+                 <!-- /. ROW  -->
+                
+
+                <!-- /. ROW  -->
+			
+				</div>
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+     <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="/static/assets/js/jquery-1.10.2.js"></script>
+      <!-- Bootstrap Js -->
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Js -->
+    <script src="/static/assets/js/jquery.metisMenu.js"></script>
+      <!-- Custom Js -->
+    <script src="/static/assets/js/custom-scripts.js"></script>
+    
+    <script type="text/javascript">
+
+        document.getElementById("b").onclick = function () {
+            window.location.href = "/static/Student_Scores.html";
+        }
+        document.getElementById("c").onclick = function () {
+            window.location.href = "/static/Student_ChangePassword.html";
+        }
+        document.getElementById("d").onclick = function () {
+            window.location.href = "/student/course_info";
+        }
+            document.getElementById("e").onclick = function () {
+                window.location.href = "/student/course_list";
+            }
+        function logout()
+        {
+            if (confirm("Do you want to exit？")) {
+                window.location.href = "/static/Login.html";
+            }             
+        }
+
+   
+
+	</script>
+ 
+</body>
+</html>
